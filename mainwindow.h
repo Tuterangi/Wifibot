@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QKeyEvent>
 #include <myrobot.h>
 
 QT_BEGIN_NAMESPACE
@@ -32,5 +33,32 @@ private slots:
 private:
     Ui::MainWindow *ui;
     MyRobot myrobot;
+
+protected:
+    void keyPressEvent(QKeyEvent *event) override
+    {
+        if(event->key() == Qt::Key_Z)
+        {
+            myrobot.move_forward();
+        }
+        else if(event->key() == Qt::Key_D)
+        {
+            myrobot.turn_right();
+        }
+        else if(event->key() == Qt::Key_S)
+        {
+            myrobot.move_backward();
+        }
+        else if(event->key() == Qt::Key_Q)
+        {
+            myrobot.turn_left();
+        }
+        else
+        {
+            myrobot.stop();
+        }
+
+    }
+
 };
 #endif // MAINWINDOW_H

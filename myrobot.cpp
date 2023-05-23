@@ -75,65 +75,70 @@ QByteArray MyRobot::getData(){
 }
 
 
-
-
+//Création des fonctions pour déplacer le robot :
+//Fonction pour avancer :
 void MyRobot::move_forward(){
+    //On met les roues à pleine vitesse
     DataToSend[2] = 120;
     DataToSend[3] = 120;
     DataToSend[4] = 120;
     DataToSend[5] = 120;
-    DataToSend[6] = 80;
-
+    DataToSend[6] = 80;//On dit au robot que les roues tourne dans le sens anti-horaire
+    //calcul du CRC
     short crc = Crc16(DataToSend.data()+1,6);
     char bitFaible = crc & 0x00FF;
     char bitFort = (crc & 0xFF00) >> 8;
     DataToSend[7] = bitFaible;
     DataToSend[8] = bitFort;
 }
-
+//Fonction pour reculer
 void MyRobot::move_backward(){
+    //On met les roues à pleine vitesse
     DataToSend[2] = 120;
     DataToSend[3] = 120;
     DataToSend[4] = 120;
     DataToSend[5] = 120;
-    DataToSend[6] = 00;
-
+    DataToSend[6] = 00; //On dit au robot que les roues tourne dans le sens horaire
+    //calcul du CRC
     short crc = Crc16(DataToSend.data()+1,6);
     char bitFaible = crc & 0x00FF;
     char bitFort = (crc & 0xFF00) >> 8;
     DataToSend[7] = bitFaible;
     DataToSend[8] = bitFort;
 }
-
+//Fonction pour tourner à gauche
 void MyRobot::turn_left(){
+    //On arrête les roues gauche et on met les roues droites à pleine vitesse
     DataToSend[2] = 0;
     DataToSend[3] = 0;
     DataToSend[4] = 120;
     DataToSend[5] = 120;
     DataToSend[6] = 80;
-
+    //calcul du CRC
     short crc = Crc16(DataToSend.data()+1,6);
     char bitFaible = crc & 0x00FF;
     char bitFort = (crc & 0xFF00) >> 8;
     DataToSend[7] = bitFaible;
     DataToSend[8] = bitFort;
 }
-
+//Fonction pour tourner à droite
 void MyRobot::turn_right(){
+    //On arrête les roues droite et on mets les roues gauches à pleine vitesse
     DataToSend[2] = 120;
     DataToSend[3] = 120;
     DataToSend[4] = 0;
     DataToSend[5] = 0;
     DataToSend[6] = 80;
-
+    //calcul du CRC
     short crc = Crc16(DataToSend.data()+1,6);
     char bitFaible = crc & 0x00FF;
     char bitFort = (crc & 0xFF00) >> 8;
     DataToSend[7] = bitFaible;
     DataToSend[8] = bitFort;
 }
-
+//Fonction pour arrêter le robot
 void MyRobot::stop(){
+    //On arrête toutes les roues
     DataToSend[2] = 0;
     DataToSend[3] = 0;
     DataToSend[4] = 0;
@@ -147,6 +152,7 @@ void MyRobot::stop(){
     DataToSend[8] = bitFort;
 }
 
+//Fonction pour calculer le CRC
 short MyRobot::Crc16(char *Adresse_tab, unsigned char Taille_max){
     unsigned int Crc = 0xFFFF;
     unsigned int Polynome = 0xA001;

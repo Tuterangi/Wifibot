@@ -14,12 +14,15 @@ public:
     explicit MyRobot(QObject *parent = 0);
     void doConnect();
     void disConnect();
+    //déclaration de la fonction pour le calcul de CRC
     short Crc16(char *Adresse_tab, unsigned char Taille_max);
+    //déclaration des fonctions pour déplacer le robot
     void move_forward();
     void move_backward();
     void turn_left();
     void turn_right();
     void stop();
+
     QByteArray DataToSend;
     QByteArray DataReceived;
     QMutex Mutex;

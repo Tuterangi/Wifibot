@@ -34,6 +34,10 @@ private slots:
     void on_pushButton_pressed();
     void on_pushButton_released();
 
+    void on_pushButton_5_clicked();
+
+    void on_pushButton_6_clicked();
+
 private:
     Ui::MainWindow *ui;
     MyRobot myrobot;
@@ -57,6 +61,12 @@ protected:
         {
             myrobot.turn_left();//Le robot tourne à gauche
         }
+        /*else if(event->key() == Qt::Key_P){
+            myrobot.augmenterVitesse();
+        }
+        else if(event->key() == Qt::Key_M){
+            myrobot.diminuerVitesse();
+        }*/
         QMainWindow::keyPressEvent(event);
     }
     void keyReleaseEvent(QKeyEvent *event) override //Réécriture de la fonction keyReleaseEvent pour nos besoins

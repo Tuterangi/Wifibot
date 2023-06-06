@@ -60,6 +60,7 @@ void MyRobot::readyRead() {
     DataReceived = socket->readAll();
     emit updateUI(DataReceived);
     qDebug() << DataReceived[2] << DataReceived[3] << DataReceived[4];
+    info();
 }
 
 void MyRobot::MyTimerSlot() {
@@ -76,6 +77,29 @@ QByteArray MyRobot::getData(){
 
 
 //Création des fonctions pour déplacer le robot :
+
+/*int vitesse = 10;
+
+//Fonction pour augmenter la vitesse :
+
+int MyRobot::augmenterVitesse(){
+    vitesse += 5;
+    if (vitesse >=120){
+        vitesse = 120;
+    }
+    QThread::msleep(500);
+    return vitesse;
+}
+//Fonction pour diminuer la vitesse :
+int MyRobot::diminuerVitesse(){
+    vitesse -= 5;
+    if(vitesse <=0){
+        vitesse = 0;
+    }
+    QThread::msleep(500);
+    return vitesse;
+}*/
+
 //Fonction pour avancer :
 void MyRobot::move_forward(){
     //On met les roues à pleine vitesse
@@ -174,3 +198,40 @@ short MyRobot::Crc16(char *Adresse_tab, unsigned char Taille_max){
     return(Crc);
 }
 
+void MyRobot::info(){
+    dataL.SpeedFront=(int)((DataReceived[1] << 8) + DataReceived[0]);
+    if (dataL.SpeedFront > 32767) dataL.SpeedFront=dataL.SpeedFront-65536;
+    dataL.BatLevel=DataReceived[2];
+    dataL.IR=DataReceived[3];
+    dataL.IR2=DataReceived[4];
+    dataL.odometry=((((long)DataReceived[8] << 24))+(((long)DataReceived[7] <<16))+(((long)DataReceived[6] << 8))+((long)DataReceived[5]));
+    dataR.SpeedFront=(int)(DataReceived[10] << 8) + DataReceived[9];
+    if (dataR.SpeedFront > 32767) dataR.SpeedFront=dataR.SpeedFront-65536;
+    dataR.BatLevel=0;
+    dataR.IR=DataReceived[11];
+    dataR.IR2=DataReceived[12];
+    dataR.odometry=((((long)DataReceived[16] << 24))+(((long)DataReceived[15] <<16))+(((long)DataReceived[14] << 8))+((long)DataReceived[13]));
+    dataL.Current=DataReceived[17];
+    dataR.Current=DataReceived[17];
+    dataL.Version=DataReceived[18];
+    dataR.Version=DataReceived[18];
+
+    qDebug() << "info : " << dataL.BatLevel;
+}
+
+int MyRobot::getIR(){
+    return(dataL.IR + dataR.IR);
+}
+
+unsigned char MyRobot::getBat(){
+    return(dataL.BatLevel);
+}
+unsigned char MyRobot::getCurrent(){
+    return(dataL.Current);
+}
+float MyRobot::getSpeed(){
+    return(dataL.SpeedFront);
+}
+float MyRobot::getOdometry(){
+    return(dataL.odometry);
+}

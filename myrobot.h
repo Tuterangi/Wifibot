@@ -7,6 +7,17 @@
 #include <QDebug>
 #include <QTimer>
 #include <QMutex>
+#include <QThread>
+
+struct Data{
+    int SpeedFront;
+    unsigned char BatLevel;
+    int IR;
+    unsigned char IR2;
+    float odometry;
+    unsigned char Current;
+    unsigned char Version;
+};
 
 class MyRobot : public QObject {
     Q_OBJECT
@@ -22,10 +33,21 @@ public:
     void turn_left();
     void turn_right();
     void stop();
+    /*int augmenterVitesse();
+    int diminuerVitesse();*/
 
     QByteArray DataToSend;
     QByteArray DataReceived;
     QMutex Mutex;
+    Data dataL = {};
+    Data dataR= {};
+    void info();
+
+    int getIR();
+    unsigned char getBat();
+    unsigned char getCurrent();
+    float getSpeed();
+    float getOdometry();
 
     QByteArray getData();
 
@@ -41,7 +63,7 @@ public slots:
 
 private:
     QTcpSocket *socket;
-    QTimer *TimerEnvoi;
+    QTimer *TimerEnvoi;   
 };
 
 #endif // MYROBOT_H

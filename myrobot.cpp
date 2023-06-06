@@ -1,6 +1,7 @@
 // myrobot.cpp
 
 #include "myrobot.h"
+#include "qwebengineview.h"
 
 MyRobot::MyRobot(QObject *parent) : QObject(parent) {
     DataToSend.resize(9);
@@ -107,3 +108,5 @@ float MyRobot::getSpeed(){
 float MyRobot::getOdometry(){
     return(dataL.odometry);
 }
+
+

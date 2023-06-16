@@ -17,7 +17,7 @@ MyRobot::MyRobot(QObject *parent) : QObject(parent) {
     TimerEnvoi = new QTimer();
     // setup signal and slot
     connect(TimerEnvoi, SIGNAL(timeout()), this, SLOT(MyTimerSlot())); //Send data to wifibot timer
-    //vitesse = 0;
+    vitesse = 0;
 }
 
 
@@ -79,25 +79,25 @@ QByteArray MyRobot::getData(){
 
 //Création des fonctions pour déplacer le robot :
 //fonction pour augmenter la vitesse
-/*unsigned char MyRobot::augmenter(){
+int MyRobot::augmenter(){
     vitesse += 10;
     return(vitesse);
 }
 
-unsigned char MyRobot::diminuer(){
+int MyRobot::diminuer(){
     vitesse -= 10;
     return(vitesse);
-}*/
+}
 //Fonction pour avancer :
 void MyRobot::move_forward(){
     //On met les roues à pleine vitesse
-    DataToSend[2] = 120;
-    DataToSend[3] = 120;
-    DataToSend[4] = 120;
-    DataToSend[5] = 120;
+    DataToSend[2] = vitesse;
+    DataToSend[3] = 0;
+    DataToSend[4] = vitesse;
+    DataToSend[5] = 0;
     DataToSend[6] = 80;//On dit au robot que les roues tourne dans le sens anti-horaire
     //calcul du CRC
-    short crc = Crc16(DataToSend.data()+1,6);
+    short crc = Crc16((unsigned char *)DataToSend.data()+1,6);
     char bitFaible = crc & 0x00FF;
     char bitFort = (crc & 0xFF00) >> 8;
     DataToSend[7] = bitFaible;
@@ -106,13 +106,13 @@ void MyRobot::move_forward(){
 //Fonction pour reculer
 void MyRobot::move_backward(){
     //On met les roues à pleine vitesse
-    DataToSend[2] = 120;
-    DataToSend[3] = 120;
-    DataToSend[4] = 120;
-    DataToSend[5] = 120;
+    DataToSend[2] = vitesse;
+    DataToSend[3] = 0;
+    DataToSend[4] = vitesse;
+    DataToSend[5] = 0;
     DataToSend[6] = 00; //On dit au robot que les roues tourne dans le sens horaire
     //calcul du CRC
-    short crc = Crc16(DataToSend.data()+1,6);
+    short crc = Crc16((unsigned char *)DataToSend.data()+1,6);
     char bitFaible = crc & 0x00FF;
     char bitFort = (crc & 0xFF00) >> 8;
     DataToSend[7] = bitFaible;
@@ -123,11 +123,11 @@ void MyRobot::turn_left(){
     //On arrête les roues gauche et on met les roues droites à pleine vitesse
     DataToSend[2] = 0;
     DataToSend[3] = 0;
-    DataToSend[4] = 120;
-    DataToSend[5] = 120;
+    DataToSend[4] = vitesse;
+    DataToSend[5] = 0;
     DataToSend[6] = 80;
     //calcul du CRC
-    short crc = Crc16(DataToSend.data()+1,6);
+    short crc = Crc16((unsigned char *)DataToSend.data()+1,6);
     char bitFaible = crc & 0x00FF;
     char bitFort = (crc & 0xFF00) >> 8;
     DataToSend[7] = bitFaible;
@@ -136,13 +136,13 @@ void MyRobot::turn_left(){
 //Fonction pour tourner à droite
 void MyRobot::turn_right(){
     //On arrête les roues droite et on mets les roues gauches à pleine vitesse
-    DataToSend[2] = 120;
-    DataToSend[3] = 120;
+    DataToSend[2] = vitesse;
+    DataToSend[3] = 0;
     DataToSend[4] = 0;
     DataToSend[5] = 0;
     DataToSend[6] = 80;
     //calcul du CRC
-    short crc = Crc16(DataToSend.data()+1,6);
+    short crc = Crc16((unsigned char *)DataToSend.data()+1,6);
     char bitFaible = crc & 0x00FF;
     char bitFort = (crc & 0xFF00) >> 8;
     DataToSend[7] = bitFaible;
@@ -157,7 +157,7 @@ void MyRobot::stop(){
     DataToSend[5] = 0;
     DataToSend[6] = 0;
 
-    short crc = Crc16(DataToSend.data()+1,6);
+    short crc = Crc16((unsigned char *)DataToSend.data()+1,6);
     char bitFaible = crc & 0x00FF;
     char bitFort = (crc & 0xFF00) >> 8;
     DataToSend[7] = bitFaible;
@@ -165,7 +165,7 @@ void MyRobot::stop(){
 }
 
 //Fonction pour calculer le CRC
-short MyRobot::Crc16(char *Adresse_tab, unsigned char Taille_max){
+short MyRobot::Crc16(unsigned char *Adresse_tab, unsigned char Taille_max){
     unsigned int Crc = 0xFFFF;
     unsigned int Polynome = 0xA001;
     unsigned int CptOctet = 0;
@@ -214,7 +214,7 @@ void MyRobot::info(){
     qDebug() << "capteur infra avant droit : " << getIRRF();
     qDebug() << "capteur infra arrière gauche : " << getIRLB();
     qDebug() << "capteur infra arrière droit : " << getIRRB();
-    //qDebug() << "vitesse : " << vitesse;
+    qDebug() << "vitesse : " << vitesse;
 }
 
 unsigned char MyRobot::getIRLF(){
@@ -243,16 +243,16 @@ unsigned int MyRobot::getSpeedR(){
     return((dataR.SpeedFront)/0.44);
 }
 
-long MyRobot::getOdometryL(){
+float MyRobot::getOdometryL(){
     return(dataL.odometry);
 }
-long MyRobot::getOdometryR(){
+float MyRobot::getOdometryR(){
     return(dataR.odometry);
 }
 
-long MyRobot::getLastOdometryL(){
+float MyRobot::getLastOdometryL(){
     return(dataL.last_odometry);
 }
-long MyRobot::getLastOdometryR(){
+float MyRobot::getLastOdometryR(){
     return(dataR.last_odometry);
 }

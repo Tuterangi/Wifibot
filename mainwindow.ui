@@ -431,30 +431,36 @@
      <string>Gauche</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="Augmenter">
+   <widget class="QSlider" name="curseur_vitesse">
     <property name="geometry">
      <rect>
-      <x>670</x>
-      <y>460</y>
-      <width>75</width>
-      <height>24</height>
+      <x>700</x>
+      <y>470</y>
+      <width>31</width>
+      <height>111</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Augmenter</string>
+    <property name="minimum">
+     <number>65</number>
+    </property>
+    <property name="maximum">
+     <number>240</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="QPushButton" name="diminuer">
+   <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
       <x>670</x>
-      <y>510</y>
-      <width>75</width>
-      <height>24</height>
+      <y>440</y>
+      <width>91</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>Diminuer</string>
+     <string>Curseur vitesse :</string>
     </property>
    </widget>
   </widget>

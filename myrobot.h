@@ -14,8 +14,8 @@ struct Data{
     unsigned char BatLevel;
     unsigned char IR;
     unsigned char IR2;
-    long odometry;
-    long last_odometry;
+    float odometry;
+    float last_odometry;
     unsigned char Current;
     unsigned char Version;
 };
@@ -27,17 +27,17 @@ public:
     void doConnect();
     void disConnect();
     //déclaration de la fonction pour le calcul de CRC
-    short Crc16(char *Adresse_tab, unsigned char Taille_max);
+    short Crc16(unsigned char *Adresse_tab, unsigned char Taille_max);
     //déclaration des fonctions pour déplacer le robot
     void move_forward();
     void move_backward();
     void turn_left();
     void turn_right();
     void stop();
-    /*unsigned char augmenter();
-    unsigned char diminuer();
+    int augmenter();
+    int diminuer();
 
-    unsigned char vitesse;*/
+    int vitesse;
     QByteArray DataToSend;
     QByteArray DataReceived;
     QMutex Mutex;
@@ -53,10 +53,10 @@ public:
     unsigned char getCurrent();
     unsigned int getSpeedL();
     unsigned int getSpeedR();
-    long getOdometryL();
-    long getOdometryR();
-    long getLastOdometryL();
-    long getLastOdometryR();
+    float getOdometryL();
+    float getOdometryR();
+    float getLastOdometryL();
+    float getLastOdometryR();
 
     QByteArray getData();
 

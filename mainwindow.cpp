@@ -9,11 +9,12 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     myrobot.info();
-    batterie();
 
     QWebEngineView *video= new QWebEngineView();
     manager=new QNetworkAccessManager();
     printVideo(video);
+
+    infrarouge();
 
 }
 
@@ -29,6 +30,8 @@ void MainWindow::odometrie(){
     this->ui->odometrie_gauche->setText((QString) OL); //On affiche la position de la roue Gauche
     this->ui->odometrie_droite->setText((QString) OR); //On affiche la position de la roue Droite
 }
+
+
 
 void MainWindow::vitesse(){
     long odometrie_diffL = myrobot.getOdometryL() - myrobot.getLastOdometryL();
@@ -60,7 +63,7 @@ void MainWindow::batterie(){
 }
 
 void MainWindow::printVideo(QWebEngineView *video){
-    video->setGeometry(10,10,500,421);
+    video->setGeometry(0,0,500,421);
     QUrl url = QUrl("http://192.168.1.106:8080/?action=stream");
     video->load(url);
     video->setParent(ui->videoWidget);
@@ -86,7 +89,7 @@ void MainWindow::camDown(){
 void MainWindow::on_pushButton_2_pressed()//Pressage du bouton "Haut"
 {
     myrobot.move_forward();
-    //batterie();
+    batterie();
     odometrie();
     vitesse();
     infrarouge();
@@ -95,7 +98,7 @@ void MainWindow::on_pushButton_2_pressed()//Pressage du bouton "Haut"
 void MainWindow::on_pushButton_2_released()//Relâchage du bouton "Haut"
 {
     myrobot.stop();
-    //batterie();
+    batterie();
     odometrie();
     vitesse();
     infrarouge();
@@ -104,7 +107,7 @@ void MainWindow::on_pushButton_2_released()//Relâchage du bouton "Haut"
 void MainWindow::on_pushButton_3_pressed()//Pressage du bouton "Droite"
 {
     myrobot.turn_right();
-   // batterie();
+    batterie();
     odometrie();
     vitesse();
     infrarouge();
@@ -112,7 +115,7 @@ void MainWindow::on_pushButton_3_pressed()//Pressage du bouton "Droite"
 void MainWindow::on_pushButton_3_released()//Relâchage du bouton "Droite"
 {
     myrobot.stop();
-    //batterie();
+    batterie();
     odometrie();
     vitesse();
     infrarouge();
@@ -121,7 +124,7 @@ void MainWindow::on_pushButton_3_released()//Relâchage du bouton "Droite"
 void MainWindow::on_pushButton_4_pressed()//Pressage du bouton "Bas"
 {
     myrobot.move_backward();
-    //batterie();
+    batterie();
     odometrie();
     vitesse();
     infrarouge();
@@ -129,7 +132,7 @@ void MainWindow::on_pushButton_4_pressed()//Pressage du bouton "Bas"
 void MainWindow::on_pushButton_4_released()//Relâchage du bouton "Bas"
 {
     myrobot.stop();
-    //batterie();
+    batterie();
     odometrie();
     vitesse();
     infrarouge();
@@ -138,7 +141,7 @@ void MainWindow::on_pushButton_4_released()//Relâchage du bouton "Bas"
 void MainWindow::on_pushButton_pressed()//Pressage du bouton "Gauche"
 {
     myrobot.turn_left();
-    //batterie();
+    batterie();
     odometrie();
     vitesse();
     infrarouge();
@@ -147,7 +150,7 @@ void MainWindow::on_pushButton_pressed()//Pressage du bouton "Gauche"
 void MainWindow::on_pushButton_released()//Relâchage du bouton "Gauche"
 {
     myrobot.stop();
-    //batterie();
+    batterie();
     odometrie();
     vitesse();
     infrarouge();
@@ -156,7 +159,7 @@ void MainWindow::on_pushButton_released()//Relâchage du bouton "Gauche"
 void MainWindow::on_pushButton_5_clicked() //Bouton connexion
 {
     myrobot.doConnect();
-    //batterie();
+    batterie();
     odometrie();
     vitesse();
     infrarouge();
@@ -166,9 +169,6 @@ void MainWindow::on_pushButton_5_clicked() //Bouton connexion
 void MainWindow::on_pushButton_6_clicked() //Bouton deconnexion
 {
     myrobot.disConnect();
-    /*this->ui->progressBar->setValue(0);
-    this->ui->lcdNumber->display(0);
-    this->ui->lcdNumber_2->display(0);*/
 
 }
 
@@ -196,15 +196,8 @@ void MainWindow::on_Gauche_clicked()
     camLeft();
 }
 
-
-/*void MainWindow::on_Augmenter_clicked()
+void MainWindow::on_curseur_vitesse_sliderMoved(int position)
 {
-    myrobot.augmenter();
+    myrobot.vitesse = position;
 }
-
-
-void MainWindow::on_diminuer_clicked()
-{
-    myrobot.diminuer();
-}*/
 

@@ -54,9 +54,7 @@ private slots:
 
     void on_Gauche_clicked();
 
-    /*void on_Augmenter_clicked();
-
-    void on_diminuer_clicked();*/
+    void on_curseur_vitesse_sliderMoved(int position);
 
 private:
     Ui::MainWindow *ui;
@@ -101,12 +99,6 @@ protected:
             vitesse();
             infrarouge();
         }
-        /*else if(event->key() == Qt::Key_P){
-            myrobot.augmenterVitesse();
-        }
-        else if(event->key() == Qt::Key_M){
-            myrobot.diminuerVitesse();
-        }*/
         QMainWindow::keyPressEvent(event);
     }
     void keyReleaseEvent(QKeyEvent *event) override //Réécriture de la fonction keyReleaseEvent pour nos besoins

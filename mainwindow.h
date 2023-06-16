@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QKeyEvent>
 #include <myrobot.h>
+#include <QWebEngineView>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,6 +17,13 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void printVideo(QWebEngineView *video);
+    void camRight();
+    void camLeft();
+    void camUp();
+    void camDown();
+
+    QNetworkAccessManager *manager;
 
 private slots:
     //création des boutons pour avancer
@@ -37,6 +45,18 @@ private slots:
     void on_pushButton_5_clicked();
 
     void on_pushButton_6_clicked();
+
+    void on_Haut_clicked();
+
+    void on_Droite_clicked();
+
+    void on_Bas_clicked();
+
+    void on_Gauche_clicked();
+
+    /*void on_Augmenter_clicked();
+
+    void on_diminuer_clicked();*/
 
 private:
     Ui::MainWindow *ui;

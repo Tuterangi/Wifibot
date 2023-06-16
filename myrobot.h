@@ -34,9 +34,10 @@ public:
     void turn_left();
     void turn_right();
     void stop();
-    /*int augmenterVitesse();
-    int diminuerVitesse();*/
+    /*unsigned char augmenter();
+    unsigned char diminuer();
 
+    unsigned char vitesse;*/
     QByteArray DataToSend;
     QByteArray DataReceived;
     QMutex Mutex;

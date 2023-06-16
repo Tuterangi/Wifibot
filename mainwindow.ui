@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>&lt; (Q)</string>
+     <string>Left (Q)</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_2">
@@ -37,7 +37,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>A (Z)</string>
+     <string>Forward (Z)</string>
     </property>
     <property name="checkable">
      <bool>false</bool>
@@ -59,7 +59,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>&gt;  (D)</string>
+     <string>Right  (D)</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_4">
@@ -72,10 +72,10 @@
      </rect>
     </property>
     <property name="text">
-     <string>V (S)</string>
+     <string>Backward (S)</string>
     </property>
    </widget>
-   <widget class="QOpenGLWidget" name="openGLWidget">
+   <widget class="QOpenGLWidget" name="videoWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -85,7 +85,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="lcdNumber">
+   <widget class="QLCDNumber" name="vitesse_roue_gauche">
     <property name="geometry">
      <rect>
       <x>540</x>
@@ -95,7 +95,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="lcdNumber_2">
+   <widget class="QLCDNumber" name="capteur_avant_gauche">
     <property name="geometry">
      <rect>
       <x>540</x>
@@ -140,7 +140,7 @@
      <string>Deconnexion</string>
     </property>
    </widget>
-   <widget class="QProgressBar" name="progressBar">
+   <widget class="QProgressBar" name="batterie">
     <property name="geometry">
      <rect>
       <x>637</x>
@@ -148,6 +148,9 @@
       <width>121</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="maximum">
+     <number>205</number>
     </property>
     <property name="value">
      <number>0</number>
@@ -192,7 +195,7 @@
      <string>Déplacement du robot</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_5">
+   <widget class="QLabel" name="odometrie_gauche">
     <property name="geometry">
      <rect>
       <x>630</x>
@@ -205,7 +208,7 @@
      <string>0</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_6">
+   <widget class="QLabel" name="odometrie_droite">
     <property name="geometry">
      <rect>
       <x>720</x>
@@ -231,7 +234,7 @@
      <string>Odométrie :</string>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="lcdNumber_3">
+   <widget class="QLCDNumber" name="vitesse_roue_droite">
     <property name="geometry">
      <rect>
       <x>680</x>
@@ -254,7 +257,7 @@
      <string>Vitesse roue Droite</string>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="lcdNumber_4">
+   <widget class="QLCDNumber" name="capteur_avant_droite">
     <property name="geometry">
      <rect>
       <x>680</x>
@@ -273,7 +276,7 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="lcdNumber_5">
+   <widget class="QLCDNumber" name="capteur_arriere_gauche">
     <property name="geometry">
      <rect>
       <x>540</x>
@@ -292,7 +295,7 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="lcdNumber_6">
+   <widget class="QLCDNumber" name="capteur_arriere_droite">
     <property name="geometry">
      <rect>
       <x>680</x>
@@ -366,7 +369,7 @@
    <widget class="QLabel" name="label_13">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>220</x>
       <y>440</y>
       <width>141</width>
       <height>21</height>
@@ -376,10 +379,10 @@
      <string>Déplacement de la caméra</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_7">
+   <widget class="QPushButton" name="Haut">
     <property name="geometry">
      <rect>
-      <x>290</x>
+      <x>240</x>
       <y>470</y>
       <width>75</width>
       <height>24</height>
@@ -389,10 +392,10 @@
      <string>Haut</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_8">
+   <widget class="QPushButton" name="Droite">
     <property name="geometry">
      <rect>
-      <x>330</x>
+      <x>280</x>
       <y>500</y>
       <width>75</width>
       <height>24</height>
@@ -402,10 +405,10 @@
      <string>Droite</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_9">
+   <widget class="QPushButton" name="Bas">
     <property name="geometry">
      <rect>
-      <x>290</x>
+      <x>240</x>
       <y>530</y>
       <width>75</width>
       <height>24</height>
@@ -415,10 +418,10 @@
      <string>Bas</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_10">
+   <widget class="QPushButton" name="Gauche">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>200</x>
       <y>500</y>
       <width>75</width>
       <height>24</height>
@@ -426,6 +429,32 @@
     </property>
     <property name="text">
      <string>Gauche</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Augmenter">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>460</y>
+      <width>75</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Augmenter</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="diminuer">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>510</y>
+      <width>75</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Diminuer</string>
     </property>
    </widget>
   </widget>

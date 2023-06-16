@@ -17,6 +17,7 @@ MyRobot::MyRobot(QObject *parent) : QObject(parent) {
     TimerEnvoi = new QTimer();
     // setup signal and slot
     connect(TimerEnvoi, SIGNAL(timeout()), this, SLOT(MyTimerSlot())); //Send data to wifibot timer
+    //vitesse = 0;
 }
 
 
@@ -77,6 +78,16 @@ QByteArray MyRobot::getData(){
 
 
 //Création des fonctions pour déplacer le robot :
+//fonction pour augmenter la vitesse
+/*unsigned char MyRobot::augmenter(){
+    vitesse += 10;
+    return(vitesse);
+}
+
+unsigned char MyRobot::diminuer(){
+    vitesse -= 10;
+    return(vitesse);
+}*/
 //Fonction pour avancer :
 void MyRobot::move_forward(){
     //On met les roues à pleine vitesse
@@ -203,6 +214,7 @@ void MyRobot::info(){
     qDebug() << "capteur infra avant droit : " << getIRRF();
     qDebug() << "capteur infra arrière gauche : " << getIRLB();
     qDebug() << "capteur infra arrière droit : " << getIRRB();
+    //qDebug() << "vitesse : " << vitesse;
 }
 
 unsigned char MyRobot::getIRLF(){
